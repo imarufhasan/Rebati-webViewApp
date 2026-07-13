@@ -9,6 +9,10 @@ dist/
 web-build/
 expo-env.d.ts
 
+# Credentials
+credentials.json
+credentials/
+
 # Native
 .kotlin/
 *.orig.*
