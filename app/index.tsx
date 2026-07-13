@@ -2,14 +2,14 @@ import NetInfo from "@react-native-community/netinfo";
 import { StatusBar as ExpoStatusBar } from "expo-status-bar";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import {
-    ActivityIndicator,
-    BackHandler,
-    Platform,
-    StatusBar,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View,
+  ActivityIndicator,
+  BackHandler,
+  Platform,
+  StatusBar,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { WebView, WebViewNavigation } from "react-native-webview";
@@ -62,12 +62,12 @@ export default function Index() {
     return (
       <SafeAreaView style={styles.centerContainer}>
         <ExpoStatusBar style="dark" />
-        <Text style={styles.errorTitle}>ইন্টারনেট সংযোগ নেই</Text>
+        <Text style={styles.errorTitle}>No Internet Connection</Text>
         <Text style={styles.errorSubtitle}>
-          অনুগ্রহ করে আপনার ইন্টারনেট সংযোগ চেক করুন
+          Please check your internet connection and try again.
         </Text>
         <TouchableOpacity style={styles.retryButton} onPress={handleReload}>
-          <Text style={styles.retryButtonText}>আবার চেষ্টা করুন</Text>
+          <Text style={styles.retryButtonText}>Try Again</Text>
         </TouchableOpacity>
       </SafeAreaView>
     );
@@ -77,10 +77,10 @@ export default function Index() {
     return (
       <SafeAreaView style={styles.centerContainer}>
         <ExpoStatusBar style="dark" />
-        <Text style={styles.errorTitle}>কিছু একটা সমস্যা হয়েছে</Text>
-        <Text style={styles.errorSubtitle}>পেজটি লোড করা যায়নি</Text>
+        <Text style={styles.errorTitle}>Something Went Wrong</Text>
+        <Text style={styles.errorSubtitle}>The page could not be loaded.</Text>
         <TouchableOpacity style={styles.retryButton} onPress={handleReload}>
-          <Text style={styles.retryButtonText}>আবার চেষ্টা করুন</Text>
+          <Text style={styles.retryButtonText}>Try Again</Text>
         </TouchableOpacity>
       </SafeAreaView>
     );

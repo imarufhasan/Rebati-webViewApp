@@ -18,7 +18,7 @@
       },
       "edgeToEdgeEnabled": true,
       "predictiveBackGestureEnabled": false,
-      "package": "com.marufhasan.rebatiwebview"
+      "package": "com.marufhasan.rebati"
     },
     "web": {
       "output": "static",
