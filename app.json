@@ -2,7 +2,7 @@
   "expo": {
     "name": "Rebati",
     "slug": "rebati-webview",
-    "version": "1.0.1",
+    "version": "1.0.4",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "rebatiwebview",
@@ -12,7 +12,7 @@
       "supportsTablet": true
     },
     "android": {
-      "versionCode": 2,
+      "versionCode": 22,
       "adaptiveIcon": {
         "backgroundColor": "#ffffff",
         "foregroundImage": "./assets/images/adaptive-icon.png"
@@ -27,6 +27,7 @@
     },
     "plugins": [
       "expo-router",
+      "./plugins/withAndroidSigning",
       [
         "expo-splash-screen",
         {
