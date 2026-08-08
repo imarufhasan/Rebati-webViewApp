@@ -22,6 +22,9 @@ credentials/
 *.key
 *.mobileprovision
 
+*.keystore
+credentials/
+
 # Metro
 .metro-health-check*
 
