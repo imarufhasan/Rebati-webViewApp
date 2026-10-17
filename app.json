@@ -2,7 +2,7 @@
   "expo": {
     "name": "Rebati",
     "slug": "rebati-webview",
-    "version": "1.0.4",
+    "version": "1.0.5",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "rebatiwebview",
@@ -12,13 +12,16 @@
       "supportsTablet": true
     },
     "android": {
-      "versionCode": 22,
+      "versionCode": 25,
       "adaptiveIcon": {
         "backgroundColor": "#ffffff",
-        "foregroundImage": "./assets/images/adaptive-icon.png"
+        "foregroundImage": "./assets/images/adaptive-icon3.png",
+        "backgroundImage": "./assets/images/adaptive-icon3.png",
+        "monochromeImage": "./assets/images/adaptive-icon3.png"
       },
       "edgeToEdgeEnabled": true,
       "predictiveBackGestureEnabled": false,
+      "softwareKeyboardLayoutMode": "resize",
       "package": "com.marufhasan.rebati"
     },
     "web": {
