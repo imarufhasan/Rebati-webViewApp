@@ -1,50 +1,84 @@
-# Learn more https://docs.github.com/en/get-started/getting-started-with-git/ignoring-files
+# ==============================================================
+# Rebati (Expo React Native) - Production .gitignore
+# Package: com.marufhasan.rebati
+# ==============================================================
 
-# dependencies
+# 📦 Dependencies
 node_modules/
+.pnp
+.pnp.js
 
-# Expo
+# 📱 Expo & EAS Build
 .expo/
 dist/
 web-build/
 expo-env.d.ts
+.eas/
+*.aab
+*.apk
+*.ipa
 
-# Credentials
+# 🔐 Security, Google Play Service Account & Signing Keys (CRITICAL)
+# Never commit your Google Play API key or Android keystores!
+google-service-account.json
+*service-account*.json
+pc-api-*.json
+play-store-key.json
 credentials.json
 credentials/
-
-# Native
-.kotlin/
-*.orig.*
+*.keystore
 *.jks
 *.p8
 *.p12
 *.key
+*.pem
 *.mobileprovision
 
-*.keystore
-credentials/
-
-# Metro
-.metro-health-check*
-
-# debug
-npm-debug.*
-yarn-debug.*
-yarn-error.*
-
-# macOS
-.DS_Store
-*.pem
-
-# local env files
+# ⚙️ Environment Variables (Keep secrets private)
+.env
+.env.local
 .env*.local
+!.env.example
 
-# typescript
+# 🤖 Native Generated Folders (Expo Config Plugins generate these in EAS)
+/ios/
+/android/
+.kotlin/
+.gradle/
+build/
+*.orig.*
+
+# 🚇 Metro Bundler & Package Managers
+.metro-health-check*
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# 💻 Operating System Files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# 🛠️ IDE & Editor Files
+.idea/
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.swp
+*.swo
+
+# 📘 TypeScript
 *.tsbuildinfo
 
-app-example
-
-# generated native folders
-/ios
-/android
+# 🗂️ Template & Example Folders
+app-example/
+branch_structure.json
+temp_auto_push.bat
+temp_interactive_push.bat

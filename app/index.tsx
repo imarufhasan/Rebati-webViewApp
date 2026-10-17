@@ -18,31 +18,36 @@ const SITE_URL = "https://rebati.com.bd/";
 
 export default function Index() {
   const webViewRef = useRef<WebView>(null);
+
   const [canGoBack, setCanGoBack] = useState(false);
   const [loading, setLoading] = useState(true);
   const [isConnected, setIsConnected] = useState(true);
   const [hasError, setHasError] = useState(false);
 
+
   useEffect(() => {
-    const backAction = () => {
-      if (canGoBack && webViewRef.current) {
-        webViewRef.current.goBack();
-        return true;
-      }
-      return false;
-    };
     const backHandler = BackHandler.addEventListener(
       "hardwareBackPress",
-      backAction,
+      () => {
+        if (canGoBack && webViewRef.current) {
+          webViewRef.current.goBack();
+          return true;
+        }
+
+        return false;
+      },
     );
+
     return () => backHandler.remove();
   }, [canGoBack]);
 
+
   useEffect(() => {
     const unsubscribe = NetInfo.addEventListener((state) => {
-      setIsConnected(!!state.isConnected);
+      setIsConnected(Boolean(state.isConnected));
     });
-    return () => unsubscribe();
+
+    return unsubscribe;
   }, []);
 
   const handleNavigationStateChange = useCallback(
@@ -55,17 +60,29 @@ export default function Index() {
   const handleReload = () => {
     setHasError(false);
     setLoading(true);
+
     webViewRef.current?.reload();
   };
+
+  const handleError = (event: any) => {
+    console.log("WebView Error:", event.nativeEvent);
+
+    setLoading(false);
+    setHasError(true);
+  };
+
 
   if (!isConnected) {
     return (
       <SafeAreaView style={styles.centerContainer}>
         <ExpoStatusBar style="dark" />
+
         <Text style={styles.errorTitle}>No Internet Connection</Text>
+
         <Text style={styles.errorSubtitle}>
-          Please check your internet connection and try again.
+          Please check your internet connection.
         </Text>
+
         <TouchableOpacity style={styles.retryButton} onPress={handleReload}>
           <Text style={styles.retryButtonText}>Try Again</Text>
         </TouchableOpacity>
@@ -77,10 +94,13 @@ export default function Index() {
     return (
       <SafeAreaView style={styles.centerContainer}>
         <ExpoStatusBar style="dark" />
+
         <Text style={styles.errorTitle}>Something Went Wrong</Text>
-        <Text style={styles.errorSubtitle}>The page could not be loaded.</Text>
+
+        <Text style={styles.errorSubtitle}>Unable to load page.</Text>
+
         <TouchableOpacity style={styles.retryButton} onPress={handleReload}>
-          <Text style={styles.retryButtonText}>Try Again</Text>
+          <Text style={styles.retryButtonText}>Retry</Text>
         </TouchableOpacity>
       </SafeAreaView>
     );
@@ -89,35 +109,48 @@ export default function Index() {
   return (
     <SafeAreaView style={styles.container}>
       <ExpoStatusBar style="dark" />
+
       <WebView
         ref={webViewRef}
-        source={{ uri: SITE_URL }}
-        style={styles.webview}
-        onNavigationStateChange={handleNavigationStateChange}
-        onLoadStart={() => setLoading(true)}
-        onLoadEnd={() => setLoading(false)}
-        onError={() => {
-          setLoading(false);
-          setHasError(true);
+        source={{
+          uri: SITE_URL,
         }}
+        style={styles.webview}
+
+        cacheEnabled={true}
+        cacheMode="LOAD_CACHE_ELSE_NETWORK"
+
+        javaScriptEnabled={true}
+        domStorageEnabled={true}
+
+        androidLayerType="hardware"
+        mixedContentMode="always"
+
+        originWhitelist={["*"]}
+        onNavigationStateChange={handleNavigationStateChange}
+
+        onLoadStart={() => {
+          setLoading(true);
+        }}
+        onLoadEnd={() => {
+          setLoading(false);
+        }}
+        onError={handleError}
         onHttpError={() => {
           setLoading(false);
           setHasError(true);
         }}
-        startInLoadingState={true}
-        renderLoading={() => (
-          <View style={styles.loadingOverlay}>
-            <ActivityIndicator size="large" color="#0a7ea4" />
-          </View>
-        )}
-        javaScriptEnabled={true}
-        domStorageEnabled={true}
+
+        userAgent={
+          "Mozilla/5.0 (Linux; Android 10) AppleWebKit/537.36 Chrome Mobile Safari/537.36"
+        }
+
         allowsBackForwardNavigationGestures={true}
         pullToRefreshEnabled={true}
-        cacheEnabled={true}
-        originWhitelist={["*"]}
-        mixedContentMode="always"
+
+        setSupportMultipleWindows={false}
       />
+
       {loading && (
         <View style={styles.loadingOverlay} pointerEvents="none">
           <ActivityIndicator size="large" color="#0a7ea4" />
@@ -130,41 +163,75 @@ export default function Index() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#ffffff",
+
+    backgroundColor: "#fff",
+
     paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
   },
-  webview: { flex: 1 },
+
+  webview: {
+    flex: 1,
+  },
+
   loadingOverlay: {
     ...StyleSheet.absoluteFillObject,
+
     justifyContent: "center",
+
     alignItems: "center",
+
     backgroundColor: "#ffffff",
   },
+
   centerContainer: {
     flex: 1,
+
     justifyContent: "center",
+
     alignItems: "center",
+
     paddingHorizontal: 30,
-    backgroundColor: "#ffffff",
+
+    backgroundColor: "#fff",
   },
+
   errorTitle: {
     fontSize: 18,
-    fontWeight: "600",
+
+    fontWeight: "700",
+
     color: "#333",
-    marginBottom: 8,
+
+    marginBottom: 10,
+
     textAlign: "center",
   },
+
   errorSubtitle: {
     fontSize: 14,
+
     color: "#666",
+
     marginBottom: 20,
+
     textAlign: "center",
   },
+
   retryButton: {
     backgroundColor: "#0a7ea4",
-    paddingHorizontal: 24,
+
+    paddingHorizontal: 25,
+
     paddingVertical: 12,
+
     borderRadius: 8,
   },
-  retryButtonText: { color: "#fff", fontWeight: "600", fontSize: 15 },
+
+  retryButtonText: {
+    color: "#fff",
+
+    fontSize: 15,
+
+    fontWeight: "600",
+  },
 });
